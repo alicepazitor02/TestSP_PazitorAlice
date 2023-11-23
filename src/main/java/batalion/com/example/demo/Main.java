@@ -1,32 +1,33 @@
 package batalion.com.example.demo;
 
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class Main {
     public static void main(String[] args) {
-        // Creare creaturi individuale
-        Gnom gnom1 = new Gnom("Gimli");
-        Elfi elf1 = new Elfi("Legolas");
-        Ent ent1 = new Ent("Treebeard");
+        SpringApplication.run(Main.class, args);
 
-        // Creare batalion
+        // Using Proxy Pattern
+        Creatura proxyGnom = new ProxyCreatura("Gimli");
+        Creatura proxyElfi = new ProxyCreatura("Legolas");
+        Creatura proxyEnt = new ProxyCreatura("Treebeard");
+
+        // Creating battalions
         Batalion batalion1 = new Batalion("Batalion1");
-        batalion1.adaugaCreatura(gnom1);
-        batalion1.adaugaCreatura(elf1);
-        batalion1.adaugaCreatura(ent1);
+        batalion1.adaugaCreatura(proxyGnom);
+        batalion1.adaugaCreatura(proxyElfi);
+        batalion1.adaugaCreatura(proxyEnt);
 
-        // Adăugare creaturi individuale într-un alt batalion
         Batalion batalion2 = new Batalion("Batalion2");
-        batalion2.adaugaCreatura(new Gnom("Gloin"));
-        batalion2.adaugaCreatura(new Elfi("Thranduil"));
+        batalion2.adaugaCreatura(new ProxyCreatura("Gloin"));
+        batalion2.adaugaCreatura(new ProxyCreatura("Thranduil"));
 
-        // Adăugare batalioane într-un batalion mai mare
         Batalion armata = new Batalion("Armata lui Aragon");
         armata.adaugaCreatura(batalion1);
         armata.adaugaCreatura(batalion2);
 
-        // Afisare structura armatei
+        // Displaying the army structure
         armata.afisare();
     }
 }
